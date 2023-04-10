@@ -1,4 +1,4 @@
-// GUI and main program for the Training Record updated by shermina on 12.24
+// GUI and main program for the Training Record updated by Abrar on 12.24
 package com.stir.cscu9t4practical1;
 
 import java.awt.*;
@@ -17,6 +17,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JTextField mins = new JTextField(2);
     private JTextField secs = new JTextField(2);
     private JTextField dist = new JTextField(4);
+    private JTextField terrain = new JTextField(8);
+    private JTextField tempo = new JTextField(8);
+    private JTextField Repetitions = new JTextField(2);
+    private JTextField Recovery = new JTextField(2);
+    private JTextField where = new JTextField(7);
+    
     private JLabel labn = new JLabel(" Name:");
     private JLabel labd = new JLabel(" Day:");
     private JLabel labm = new JLabel(" Month:");
@@ -25,8 +31,16 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labmm = new JLabel(" Mins:");
     private JLabel labs = new JLabel(" Secs:");
     private JLabel labdist = new JLabel(" Distance (km):");
+    private JLabel labt = new JLabel(" Terrain:");
+    private JLabel labte = new JLabel(" Tempo:");
+    private JLabel labp = new JLabel(" pool:");
+    private JLabel labge = new JLabel(" Recoovery:");
+    private JLabel laboum = new JLabel(" Repetition:");
+    
     private JButton addR = new JButton("Add");
     private JButton lookUpByDate = new JButton("Look Up");
+    private JButton FindAllByDate = new JButton("Find All Entry");
+    private JButton RemoveByNameandDate = new JButton("Remove");
 
     private TrainingRecord myAthletes = new TrainingRecord();
 
@@ -68,6 +82,10 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         addR.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
+        add(FindAllByDate);
+        FindAllByDate.addActionListener(this);
+        add(RemoveByNameandDate);
+        RemoveByNameandDate.addActionListener(this);
         add(outputArea);
         outputArea.setEditable(false);
         setSize(720, 200);
@@ -87,6 +105,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         }
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
+        }
+        if (event.getSource() == FindAllByDate) {
+        		message = FindAllEntry();
+        }
+        if (event.getSource() == RemoveByNameandDate) {
+        		message = remove();
         }
         outputArea.setText(message);
         blankDisplay();
@@ -118,6 +142,24 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         return message;
     }
 
+    public String FindAllEntry() {
+    	int m = Integer.parseInt(month.getText());
+    	int d = Integer.parseInt(day.getText());
+    	int y = Integer.parseInt(year.getText());
+    	outputArea.setText("Finding all record ....");
+    	String message = myAthletes.FindAllEntry (d, m, y);
+    	return message;
+    }
+    
+    public String remove() {
+    	String n = name.getText();
+    	int m = Integer.parseInt(month.getText());
+    	int d = Integer.parseInt(day.getText());
+    	int y = Integer.parseInt(year.getText());
+    	outputArea.setText("removing a record ....");
+    	String message = myAthletes.remove (d, m, y, n);
+    	return message;
+    }
     public void blankDisplay() {
         name.setText("");
         day.setText("");
